@@ -39,6 +39,11 @@ function getInfo() {
 
 function init() {
     const videoPlayer = document.querySelector('video')
+
+    if (!videoPlayer) {
+        return
+    }
+
     const videoDuration = videoPlayer.duration
 
     setInterval(() => {
