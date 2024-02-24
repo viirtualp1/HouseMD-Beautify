@@ -18,21 +18,25 @@ function getParams() {
   }
 }
 
-function getNextEpisodeInfo(season: number, episode: number) {
+function getNextEpisodeInfo() {
+  let { season, episode } = getParams()
+
   const lastEpisode = EPISODES_IN_SEASON[season] || DEFAULT_EPISODES_PER_SEASON
   const isLastEpisode = lastEpisode === episode
 
+  if (isLastEpisode) {
+    episode++
+    season = 1
+  }
+
   return {
-    season: isLastEpisode ? season + 1 : season,
-    episode: isLastEpisode ? 1 : episode + 1,
+    season,
+    episode,
   }
 }
 
-function goToNextEpisode(season: number, episode: number) {
-  const { season: nextSeason, episode: nextEpisode } = getNextEpisodeInfo(
-    season,
-    episode,
-  )
+function goToNextEpisode() {
+  const { season: nextSeason, episode: nextEpisode } = getNextEpisodeInfo()
 
   location.href = `https://plplayer.online/s/486?season=${nextSeason}&episode=${nextEpisode}&voice=14&voonly=true`
 }
@@ -54,9 +58,7 @@ function initializeVideoPlayer() {
       timeToVideoEnd <= SECONDS_BEFORE_END_TO_TRIGGER_NEXT_EPISODE &&
       videoDuration > MIN_VIDEO_DURATION_FOR_TRIGGER
     ) {
-      const { season, episode } = getParams()
-
-      goToNextEpisode(season, episode)
+      goToNextEpisode()
     }
   }, 1000)
 }
