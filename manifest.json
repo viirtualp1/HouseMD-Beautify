@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "TBV Autoplay",
   "description": "Play next episode after current is ended",
-  "version": "1.0",
+  "version": "1.3",
   "content_scripts": [
     {
       "js": ["scripts/index.js"],
