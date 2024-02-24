@@ -25,8 +25,8 @@ function getNextEpisodeInfo() {
   const isLastEpisode = lastEpisode === episode
 
   if (isLastEpisode) {
-    episode++
     season = 1
+    episode = 1
   }
 
   return {
