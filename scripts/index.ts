@@ -1,61 +1,56 @@
-interface ParamsData {
-    season: number
-    episode: number
-}
-
 const TIMEOUT_TO_PLAY_VIDEO = 5 * 1000
 
 const EPISODES_IN_SEASON = {
-    1: 17,
-    2: 23,
-    3: 23,
+  1: 17,
+  2: 23,
+  3: 23,
 }
 
-function getParams(): ParamsData {
-    const search = new URL(location.href).search
-    const searchParams = new URLSearchParams(search);
+function getParams() {
+  const search = new URL(location.href).search
+  const searchParams = new URLSearchParams(search)
 
-    return {
-        season: Number(searchParams.get('season')),
-        episode: Number(searchParams.get('episode')),
-    }
+  return {
+    season: Number(searchParams.get('season')),
+    episode: Number(searchParams.get('episode')),
+  }
 }
 
 function getInfo() {
-    let { season, episode} = getParams()
+  let { season, episode } = getParams()
 
-    const lastEpisode = EPISODES_IN_SEASON[season] || 24
-    const isLastEpisode = lastEpisode === episode
+  const lastEpisode = EPISODES_IN_SEASON[season] || 24
+  const isLastEpisode = lastEpisode === episode
 
-    if (isLastEpisode) {
-        season += 1
-    }
+  if (isLastEpisode) {
+    season += 1
+  }
 
-    return {
-        season,
-        episode: isLastEpisode ? 1 : episode,
-    }
+  return {
+    season,
+    episode: isLastEpisode ? 1 : episode,
+  }
 }
 
 function init() {
-    const videoPlayer = document.querySelector('video')
+  const videoPlayer = document.querySelector('video')
 
-    if (!videoPlayer) {
-        return
+  if (!videoPlayer) {
+    return
+  }
+
+  const videoDuration = videoPlayer.duration
+
+  setInterval(() => {
+    const videoCurrentTime = videoPlayer.currentTime
+    const timeToVideoEnd = videoDuration - videoCurrentTime
+
+    if (timeToVideoEnd <= 30 && videoDuration > 10) {
+      const { season, episode } = getInfo()
+
+      location.href = `https://plplayer.online/s/486?season=${season}&episode=${episode + 1}&voice=14&vonly=true`
     }
-
-    const videoDuration = videoPlayer.duration
-
-    setInterval(() => {
-        const videoCurrentTime = videoPlayer.currentTime
-        const timeToVideoEnd = videoDuration - videoCurrentTime
-
-        if (timeToVideoEnd <= 30 && videoDuration > 10) {
-            const { season, episode } = getInfo()
-
-            location.href = `https://plplayer.online/s/486?season=${season}&episode=${episode + 1}&voice=14&vonly=true`
-        }
-    }, 1000)
+  }, 1000)
 }
 
 setTimeout(init, TIMEOUT_TO_PLAY_VIDEO)
