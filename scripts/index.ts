@@ -1,67 +1,28 @@
-const TIMEOUT_TO_PLAY_VIDEO = 5 * 1000
-const SECONDS_BEFORE_END_TO_TRIGGER_NEXT_EPISODE = 30
-const MIN_VIDEO_DURATION_FOR_TRIGGER = 10
-const DEFAULT_EPISODES_PER_SEASON = 24
+function removeDescription() {
+  const descriptionElement = document.querySelector(
+    'span[itemprop=description]',
+  )
+  descriptionElement.remove()
 
-const EPISODES_IN_SEASON = {
-  1: 17,
-  2: 23,
-  3: 23,
+  const titles = document.querySelectorAll('.entry-title-h2')
+  titles[2].remove()
 }
 
-function getParams() {
-  const searchParams = new URLSearchParams(window.location.search)
+function setPlayerToFullWidth() {
+  const sidebar = document.querySelector('.sidebar')
+  sidebar.remove()
 
-  return {
-    season: Number(searchParams.get('season')),
-    episode: Number(searchParams.get('episode')),
-  }
+  const content: HTMLDivElement = document.querySelector('.content')
+  content.style.width = 'auto'
 }
 
-function getNextEpisodeInfo() {
-  let { season, episode } = getParams()
-
-  const lastEpisode = EPISODES_IN_SEASON[season] || DEFAULT_EPISODES_PER_SEASON
-  const isLastEpisode = lastEpisode === episode
-
-  if (isLastEpisode) {
-    season = 1
-    episode = 1
-  }
-
-  return {
-    season,
-    episode,
-  }
+function removePageLink() {
+  const branding: HTMLLinkElement = document.querySelector('.branding')
+  branding.removeAttribute('href')
 }
 
-function goToNextEpisode() {
-  const { season: nextSeason, episode: nextEpisode } = getNextEpisodeInfo()
-
-  location.href = `https://plplayer.online/s/486?season=${nextSeason}&episode=${nextEpisode}&voice=14&voonly=true`
+window.onload = () => {
+  removeDescription()
+  setPlayerToFullWidth()
+  removePageLink()
 }
-
-function initializeVideoPlayer() {
-  const videoPlayer = document.querySelector('video')
-
-  if (!videoPlayer) {
-    return
-  }
-
-  const videoDuration = videoPlayer.duration
-
-  setInterval(() => {
-    const videoCurrentTime = videoPlayer.currentTime
-    const timeToVideoEnd = videoDuration - videoCurrentTime
-
-    if (
-      timeToVideoEnd <= SECONDS_BEFORE_END_TO_TRIGGER_NEXT_EPISODE &&
-      videoDuration > MIN_VIDEO_DURATION_FOR_TRIGGER
-    ) {
-      goToNextEpisode()
-    }
-  }, 1000)
-}
-
-// Wait for TIMEOUT_TO_PLAY_VIDEO before initializing
-setTimeout(initializeVideoPlayer, TIMEOUT_TO_PLAY_VIDEO)

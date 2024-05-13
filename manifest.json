@@ -1,14 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "TBV Autoplay",
-  "description": "Play next episode after current is ended",
-  "version": "1.3",
+  "name": "DHSinopsis",
+  "description": "Remove Doctor House sinopsis",
+  "version": "1.0",
   "content_scripts": [
     {
       "js": ["scripts/index.js"],
-      "matches": [
-        "https://plplayer.online/*"
-      ]
+      "matches": ["https://house-doc.ru/*"]
     }
   ]
 }
