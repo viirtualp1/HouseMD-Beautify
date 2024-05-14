@@ -1,6 +1,6 @@
 {
-  "name": "dh-sinopsis",
-  "version": "1.0.0",
+  "name": "housemd-beautify",
+  "version": "1.0.1",
   "main": "index.js",
   "scripts": {
     "build": "tsc ./scripts/index.ts"
