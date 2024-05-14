@@ -5,6 +5,7 @@ function removeDescription() {
   descriptionElement.remove()
 
   const titles = document.querySelectorAll('.entry-title-h2')
+  // The title of the "Description" block has an index of 2
   titles[2].remove()
 }
 
