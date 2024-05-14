@@ -1,4 +1,4 @@
-﻿# TBV Autoplay extension
+﻿# House M.D. beautify extension
 
 **The extension only works for** [https://house-doc.ru](House M.D.)
 
