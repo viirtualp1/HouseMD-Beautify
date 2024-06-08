@@ -3,8 +3,8 @@
   "name": "HouseMD-Beautify",
   "description": "Remove Doctor House sinopsis",
   "version": "1.0",
-  "side_panel": {
-    "default_path": "index.html"
+  "browser_action": {
+    "default_popup": "index.html"
   },
   "content_scripts": [
     {
