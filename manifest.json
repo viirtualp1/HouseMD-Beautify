@@ -1,8 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "DHSinopsis",
+  "name": "HouseMD-Beautify",
   "description": "Remove Doctor House sinopsis",
   "version": "1.0",
+  "side_panel": {
+    "default_path": "index.html"
+  },
   "content_scripts": [
     {
       "js": ["scripts/index.js"],
